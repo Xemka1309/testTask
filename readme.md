@@ -5,6 +5,7 @@
 ```bash
 # From repo dir 
 docker compose up --build
+# wait a bit until sql server is up and running
 ```
 
 Default forwarded app port - **8000**

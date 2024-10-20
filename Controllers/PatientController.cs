@@ -36,7 +36,7 @@ public class PatientsController : ControllerBase
     /// <remarks>
     /// Sample request:
     ///
-    ///     GET /e4f75b1c-4aa9-422f-ac0e-f4bf3efdc4dc
+    ///     GET /api/v1/patients/e4f75b1c-4aa9-422f-ac0e-f4bf3efdc4dc
     ///
     /// </remarks>
     /// <response code="200">Returns the patient</response>
@@ -59,7 +59,23 @@ public class PatientsController : ControllerBase
         return result.IsError ? ErrorResponse(result.FirstError) : Ok(_mapper.Map<GetPatientResponse>(result.Value));
     }
 
+
+    /// <summary>
+    /// Gets a patients via birthdate filter
+    /// </summary>
+    /// <returns>patients matching filter criteria</returns>
+    /// <remarks>
+    /// Sample request:
+    /// 
+    ///  GET "/api/v1/patients?birthDate=ge1955-02-03"
+    ///
+    /// </remarks>
+    /// <response code="200">Returns patients</response>
+    /// <response code="400">If the filter querry is invalid</response>
     [HttpGet("", Name = nameof(GetPatients))]
+    [ProducesResponseType(typeof(IEnumerable<GetPatientResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+    [Produces("application/json")]
     public ActionResult<IEnumerable<GetPatientResponse>> GetPatients([FromQuery(Name = "birthDate")] string[] birthDateQuerries)
     {
         if (birthDateQuerries is null || !birthDateQuerries.Any())
@@ -86,7 +102,7 @@ public class PatientsController : ControllerBase
     /// <remarks>
     /// Sample request:
     ///
-    ///     POST /
+    ///     POST /api/v1/patients
     ///     {
     ///         "name": {
     ///             "use": "Usual",
@@ -134,7 +150,37 @@ public class PatientsController : ControllerBase
             : CreatedAtRoute(nameof(GetPatient), new { id = result.Value }, result.Value);
     }
 
+    /// <summary>
+    /// Updates a patient with provided id
+    /// </summary>
+    /// <returns>newly created patient</returns>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     PUT /api/v1/patients/e4f75b1c-4aa9-422f-ac0e-f4bf3efdc4dc
+    ///     {
+    ///         "name": {
+    ///             "use": "Usual",
+    ///             "family": "ivanov",
+    ///             "given": [
+    ///                 "ivan", 
+    ///                 "ivanovich"
+    ///             ]
+    ///          },
+    ///         "gender": "Male",
+    ///         "birthDate": "2000-02-03",
+    ///         "active": true
+    ///     }
+    ///
+    /// </remarks>
+    /// <response code="200">Returns updated patient</response>
+    /// <response code="400">If request model is invalid</response>
+    /// <response code="404">If patient with provided id does not exists</response>
     [HttpPut("{id}", Name = nameof(UpdatePatient))]
+    [ProducesResponseType(typeof(GetPatientResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Error), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Error), StatusCodes.Status404NotFound)]
+    [Produces("application/json")]
     public ActionResult<GetPatientResponse> UpdatePatient([FromBody] UpdatePatientRequest updatePatientRequest, [FromRoute] Guid id)
     {
         if (id == Guid.Empty)
@@ -171,7 +217,7 @@ public class PatientsController : ControllerBase
     /// <remarks>
     /// Sample request:
     ///
-    ///     DELETE /e4f75b1c-4aa9-422f-ac0e-f4bf3efdc4dc
+    ///     DELETE /api/v1/patients/e4f75b1c-4aa9-422f-ac0e-f4bf3efdc4dc
     ///
     /// </remarks>
     /// <response code="200">Returns Id of the deleted patient</response>
