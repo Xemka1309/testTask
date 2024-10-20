@@ -1,0 +1,25 @@
+services:
+  server:
+    container_name: webapi
+    build:
+      context: .
+      target: final
+    ports:
+      - 8000:80
+    depends_on:
+      - db
+    environment:
+      SQL_PASSWORD: ComplicatedPass1!!
+      SQL_SERVER: sql_server
+      SQL_USER: sa
+  
+  db:
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: ComplicatedPass1!!
+    
+    ports: 
+      - "1400:1433"
+    container_name: sql_server
+    image: mcr.microsoft.com/mssql/server
+

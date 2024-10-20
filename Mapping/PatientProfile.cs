@@ -15,7 +15,7 @@ public class PatientProfile : Profile
         CreateMap<Models.Patient.NameUse, Contract.v1.Patient.NameUse>();
 
         CreateMap<PatientName, GetPatientNameResponse>()
-            .ForMember(n => n.Given, opt => opt.MapFrom(src => src.Given.Select(g => g.Value)))
+            .ForMember(n => n.Given, opt => opt.MapFrom(src => src.Given == null ? null : src.Given.Select(g => g.Value)))
             .ForMember(n => n.Id, opt => opt.MapFrom(src => src.PatientId))
             .ForMember(n => n.Given, opt => opt.AllowNull())
             .ForMember(n => n.Use, opt => opt.AllowNull());
@@ -26,20 +26,24 @@ public class PatientProfile : Profile
             .ForMember(p => p.Active, opt => opt.AllowNull())
             .ForMember(p => p.Gender, opt => opt.AllowNull());
 
-        CreateMap<CreatePatientRequest, Patient>().ConvertUsing((src, _, ctx) => MapFromCreateDTO(src, ctx));
+        CreateMap<CreatePatientRequest, Patient>().ConvertUsing((src, _, ctx) => MapFromCreatePatient(src, ctx));
         
     }
 
     // Assume src values is valid at this point
-    public static Patient MapFromCreateDTO(CreatePatientRequest createPatient, ResolutionContext ctx)
+    public static Patient MapFromCreatePatient(CreatePatientRequest createPatient, ResolutionContext ctx)
     {   
         var patientName = ctx.Mapper.Map<PatientName>(createPatient.Name);
-        var birthDateUtc = DateTime.Parse(createPatient.BirthDate!, default, System.Globalization.DateTimeStyles.AdjustToUniversal & System.Globalization.DateTimeStyles.AssumeUniversal);
+        var birthDateUtc = DateTime.Parse(
+            createPatient.BirthDate!, 
+            default, 
+            System.Globalization.DateTimeStyles.AdjustToUniversal | System.Globalization.DateTimeStyles.AssumeUniversal);
+        
         var patient = Patient.Create(
             patientName,
             birthDateUtc,
-            new Guid(),
-            ctx.Mapper.Map<Models.Patient.Gender>(createPatient.Gender),
+            Guid.NewGuid(),
+            createPatient.Gender is null ? null : ctx.Mapper.Map<Models.Patient.Gender>(createPatient.Gender),
             createPatient.Active
         );
 
@@ -48,8 +52,14 @@ public class PatientProfile : Profile
 
     public static PatientName MapFromCreatePatientName(CreatePatientName createPatientName, ResolutionContext ctx)
     {
-        var patientNameId = new Guid();
-        var givenName = createPatientName.Given.Select(value => new GivenName(id: new Guid(), value, patientNameId)).ToList();
-        return new PatientName(createPatientName.Family!, givenName, ctx.Mapper.Map<Models.Patient.NameUse>(createPatientName.Use));
+        var patientNameId = Guid.NewGuid();
+        var givenName = createPatientName.Given?
+            .Select(value => new GivenName(id: Guid.NewGuid(), value, patientNameId)).ToList();
+        
+        return new PatientName(
+            patientNameId,
+            createPatientName.Family, 
+            givenName, 
+            createPatientName.Use is null ? null : ctx.Mapper.Map<Models.Patient.NameUse>(createPatientName.Use));
     }
 }

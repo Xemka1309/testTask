@@ -1,0 +1,330 @@
+{
+	"info": {
+		"_postman_id": "2d3138b1-730d-4716-ab5d-7fdf06a0bd97",
+		"name": "HospitalTestTask",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12141610"
+	},
+	"item": [
+		{
+			"name": "Docker",
+			"item": [
+				{
+					"name": "CreatePatientFull",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Gender\": \"Male\",\r\n    \"BirthDate\": \"2000-02-03\",\r\n    \"Name\": {\r\n        \"Family\": \"ivanov\",\r\n        \"Use\": \"Maiden\",\r\n        \"Given\": [\"Ivan\", \"Ivanovich\"]\r\n    },\r\n    \"Active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/v1/patients/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"patients",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreatePatientMinimal",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"BirthDate\": \"2000-02-03\",\r\n    \"Name\": {\r\n        \"Family\": \"ivanov\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/v1/patients/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"patients",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreatePatientNoRequiredFields",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    // \"BirthDate\": \"2000-02-03\",\r\n    // \"Name\": {\r\n    //     \"Family\": \"ivanov\"\r\n    // }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/v1/patients/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"patients",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdatePatient",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"active\": false,\r\n    \"gender\": \"Other\",\r\n    \"birthDate\": \"1955-05-06T14:00\",\r\n    \"name\": {\r\n        \"use\": \"Nickname\",\r\n        \"family\": \"newfamily\",\r\n        \"given\": [\"firstname\", \"surname\"]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/v1/patients/fbd13ff9-23b2-4cf5-abea-47b5c765b817",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"patients",
+								"fbd13ff9-23b2-4cf5-abea-47b5c765b817"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdatePatientOneField",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": {\r\n        \"family\": \"familyupdatedvalue\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/v1/patients/fbd13ff9-23b2-4cf5-abea-47b5c765b817",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"patients",
+								"fbd13ff9-23b2-4cf5-abea-47b5c765b817"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPatient",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/v1/patients/1b92acf0-b27c-4ffa-ab6e-c85c636dbe3a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"patients",
+								"1b92acf0-b27c-4ffa-ab6e-c85c636dbe3a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPatientsByBirthDate1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/v1/patients?birthDate=sa1955-02-03&birthDate=lt1970-01-01",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"patients"
+							],
+							"query": [
+								{
+									"key": "birthDate",
+									"value": "sa1955-02-03"
+								},
+								{
+									"key": "birthDate",
+									"value": "lt1970-01-01"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPatientsByBirthDate4",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/v1/patients?birthDate=ge1955-02-03&birthDate=le1970-01-01",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"patients"
+							],
+							"query": [
+								{
+									"key": "birthDate",
+									"value": "ge1955-02-03"
+								},
+								{
+									"key": "birthDate",
+									"value": "le1970-01-01"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPatientsByBirthDate2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/v1/patients?birthDate=gt1955-02-03",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"patients"
+							],
+							"query": [
+								{
+									"key": "birthDate",
+									"value": "gt1955-02-03"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPatientsByBirthDate3",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/v1/patients?birthDate=le1988-05-03",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"patients"
+							],
+							"query": [
+								{
+									"key": "birthDate",
+									"value": "le1988-05-03"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Patient",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/v1/patients/1b92acf0-b27c-4ffa-ab6e-c85c636dbe3a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"patients",
+								"1b92acf0-b27c-4ffa-ab6e-c85c636dbe3a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

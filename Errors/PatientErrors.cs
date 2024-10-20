@@ -57,4 +57,7 @@ public static class PatientErrors
 
     public static Error SearchPredicatsEmpty() 
         => Error.Validation("PatientErrors.SearchPredicatsEmpty", "Search predicats is empty");
+
+    public static Error BirthDateFilterStringInvalid()
+        => Error.Validation("PatientErrors.BirthDateFilterStringInvalid", "At least one of the filter querries is invalid");
 }

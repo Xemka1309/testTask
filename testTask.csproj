@@ -4,13 +4,22 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <NoWarn>$(NoWarn);8618</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="PopulateDB\**" />
+    <Compile Remove="PopulateDB\**" />
+    <Content Remove="Postman\**" />
+    <Compile Remove="Postman\**" />
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="ErrorOr" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.0" />
+    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="7.0.0" />
   </ItemGroup>
 
 </Project>

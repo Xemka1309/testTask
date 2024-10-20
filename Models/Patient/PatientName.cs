@@ -1,10 +1,7 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace TestTask.Models.Patient;
 
 public class PatientName
 {
-    [Key]
     public Guid Id { get; private set;}
 
     public NameUse? Use { get; set;}
@@ -17,12 +14,23 @@ public class PatientName
 
     public IEnumerable<GivenName>? Given { get; set; }
 
-    public PatientName(string family, IEnumerable<GivenName>? given, NameUse? nameUse)
+    public PatientName(Guid id, string family, IEnumerable<GivenName>? given, NameUse? nameUse)
     {
         Family = family;
-        Id = new Guid();
+        Id = id;
         Given = given;
         Use = nameUse;
+    }
+
+    public void Update(string? family, IEnumerable<string>? given, NameUse? nameUse)
+    {
+        Family = family ?? Family;
+        Use = nameUse ?? Use;
+
+        if (given is not null)
+        {
+            Given = given.Select(n => new GivenName(Guid.NewGuid(), n, Id)).ToList();
+        }
     }
 
     private PatientName(){}

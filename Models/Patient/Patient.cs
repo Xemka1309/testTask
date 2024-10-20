@@ -6,7 +6,6 @@ namespace TestTask.Models.Patient;
 
 public class Patient
 {
-    [Key]
     public Guid Id { get; private set;}
     public PatientName Name { get; private set;}
     public Gender? Gender { get; private set; }
@@ -38,11 +37,13 @@ public class Patient
         return new Patient(id, name, birthDateUtc, gender, active);
     }
 
-    public ErrorOr<Updated> Update(
-        PatientName? name, 
+    public ErrorOr<Updated> Update( 
         DateTime? birthDateUtc,
         Gender? gender, 
-        bool? active)
+        bool? active,
+        string? family, 
+        IEnumerable<string>? given, 
+        NameUse? nameUse)
     {
         if (birthDateUtc is not null)
         {
@@ -56,15 +57,7 @@ public class Patient
         Gender = gender ?? Gender;
         Active = active ?? Active;
 
-        if (name is not null)
-        {
-            Name.Family = name.Family ?? Name.Family;
-            Name.Use = name.Use ?? Name.Use;
-            if (name.Given is not null)
-            {
-                Name.Given = name.Given;
-            }
-        }
+        Name.Update(family, given, nameUse);
 
         return Result.Updated;
 

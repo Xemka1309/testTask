@@ -1,0 +1,60 @@
+class FamilyNames
+{
+    public static Dictionary<int, string> GetNames()
+    {
+        Dictionary<int, string> names = new Dictionary<int, string>
+        {
+            { 1, "Valentine" },
+            { 2, "Bradford" },
+            { 3, "Merritt" },
+            { 4, "Novak" },
+            { 5, "Palmer" },
+            { 6, "Flowers" },
+            { 7, "Key" },
+            { 8, "Tapia" },
+            { 9, "Thomas" },
+            { 10, "Boyd" },
+            { 11, "Wilcox" },
+            { 12, "Zamora" },
+            { 13, "Li" },
+            { 14, "Hood" },
+            { 15, "Anderson" },
+            { 16, "Estrada" },
+            { 17, "Gallagher" },
+            { 18, "Holloway" },
+            { 19, "Ramirez" },
+            { 20, "Carrillo" },
+            { 21, "Cardenas" },
+            { 22, "Schultz" },
+            { 23, "Price" },
+            { 24, "Mcmahon" },
+            { 25, "Jensen" },
+            { 26, "Acevedo" },
+            { 27, "Welch" },
+            { 28, "Rose" },
+            { 29, "Lynch" },
+            { 30, "English" },
+            { 31, "Clay" },
+            { 32, "Paul" },
+            { 33, "Hudson" },
+            { 34, "Stanton" },
+            { 35, "Dudley" },
+            { 36, "Navarro" },
+            { 37, "Kaufman" },
+            { 38, "Sloan" },
+            { 39, "Cobb" },
+            { 40, "Harvey" },
+            { 41, "Raymond" },
+            { 42, "Baldwin" },
+            { 43, "Costa" },
+            { 44, "Nash" },
+            { 45, "Wu" },
+            { 46, "Wells" },
+            { 47, "Gray" },
+            { 48, "Ashley" },
+            { 49, "Mcclure" },
+            { 50, "Suarez" }
+        };
+        return names;
+    }
+}

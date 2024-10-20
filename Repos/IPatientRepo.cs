@@ -1,4 +1,5 @@
 using ErrorOr;
+using TestTask.Models;
 using TestTask.Models.Patient;
 
 namespace TestTask.Repos;
@@ -7,13 +8,15 @@ public interface IPatientRepo
 {
     ErrorOr<Patient> GetPatient(Guid id);
 
-    ErrorOr<IEnumerable<Patient>> GetPatientsByBirthDate(IEnumerable<Predicate<DateTime>> predicates);
+    ErrorOr<IEnumerable<Patient>> GetPatientsByBirthDate(IEnumerable<FilterQuerry> predicates);
 
     ErrorOr<Guid> CreatePatient(Patient patient);
 
-    ErrorOr<Updated> UpdatePatient(
+    ErrorOr<Patient> UpdatePatient(
         Guid id, 
-        PatientName? name, 
+        string? family,
+        NameUse? nameUse,
+        IEnumerable<string>? givenNames, 
         DateTime? birthDateUtc,
         Gender? gender, 
         bool? active);

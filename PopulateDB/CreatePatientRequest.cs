@@ -1,8 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using Microsoft.OpenApi.Validations.Rules;
-
-namespace TestTask.Contract.v1.Patient;
-
 public class CreatePatientRequest
 {
     public CreatePatientName Name { get; set;}
@@ -16,4 +11,23 @@ public class CreatePatientName
     public NameUse? Use { get; set;}
     public string Family { get; set; }
     public IEnumerable<string>? Given { get; set; }
+}
+
+public enum NameUse
+{
+    Usual,
+    Official,
+    Temp,
+    Nickname,
+    Anonymous,
+    Old,
+    Maiden
+}
+
+public enum Gender
+{
+    Male,
+    Female,
+    Other,
+    Unknown
 }
